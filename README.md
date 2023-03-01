@@ -13,6 +13,8 @@ This terraform module allows you to deploy a cluster of MLflow servers + UI usin
 - Amazon Aurora Serverless as the backend store
 - S3 as the default artifact root
 
+This module can only be used with Terraform ~> 1.3
+
 
 ## Design principles
 
