@@ -9,5 +9,6 @@ locals {
     },
     var.tags
   )
+  artifact_bucket_option = var.proxy_artifact_storage_requests ? "artifacts-destination" : "default-artifact-root"
 }
 
