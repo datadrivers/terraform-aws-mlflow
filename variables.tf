@@ -156,3 +156,15 @@ variable "gunicorn_opts" {
   type        = string
   default     = ""
 }
+
+variable "mlflow_command" {
+  description = "Additional command line options via overwrite at mlflow command"
+  type        = string
+  default     = "mlflow"
+}
+
+variable "proxy_artifact_storage_requests" {
+  description = "Toggle if storage backend should be proxied via mlflow"
+  type        = bool
+  default     = false
+}
