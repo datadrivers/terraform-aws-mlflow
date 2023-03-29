@@ -131,6 +131,10 @@ resource "aws_ecs_task_definition" "mlflow" {
             name  = "MLFLOW_ARTIFACTS_DESTINATION"
             value = "s3://${local.artifact_bucket_id}${var.artifact_bucket_path}"
           },
+          {
+            name  = "MLFLOW_SERVE_ARTIFACTS"
+            value = "True"
+          },
         ] : []
       )
       secrets = [
