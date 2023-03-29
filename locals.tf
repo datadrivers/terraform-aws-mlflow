@@ -5,7 +5,7 @@ locals {
   artifact_bucket_id      = local.create_dedicated_bucket ? aws_s3_bucket.default.0.id : var.artifact_bucket_id
   tags = merge(
     {
-      "terraform-module" = "glovo/mlflow/aws"
+      "terraform-module" = "datadrivers/mlflow/aws"
     },
     var.tags
   )

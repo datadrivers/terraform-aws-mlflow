@@ -35,6 +35,51 @@ resource "aws_iam_role" "ecs_task" {
       ]
     })
   }
+
+  dynamic "inline_policy" {
+    for_each = local.create_dedicated_bucket ? ["1"] : []
+    content = {
+      name = "access_to_default_buckets"
+      policy = jsonencode({
+        Version = "2012-10-17"
+        Statement = [
+          {
+            Effect = "Allow"
+            Action = [
+              "s3:ListBucket",
+              "s3:GetBucketLocation",
+            ]
+            Resource = concat(
+              aws_s3_bucket.default.*.arn,
+              var.artifact_buckets_mlflow_will_read,
+            )
+          },
+          {
+            Effect = "Allow"
+            Action = [
+              "s3:ListBucketMultipartUploads",
+              "s3:GetObjectVersionTagging",
+              "s3:PutObjectVersionTagging",
+              "s3:ListMultipartUploadParts",
+              "s3:PutObject",
+              "s3:GetObject",
+              "s3:DeleteObject",
+              "s3:GetObjectAcl",
+              "s3:AbortMultipartUpload",
+              "s3:GetObjectVersionAcl",
+              "s3:GetObjectTagging",
+              "s3:PutObjectTagging",
+              "s3:GetObjectVersion",
+            ]
+            Resource = [
+              for bucket in concat(aws_s3_bucket.default.*.arn, var.artifact_buckets_mlflow_will_read) :
+              "${bucket}/*"
+            ]
+          },
+        ]
+      })
+    }
+  }
 }
 
 resource "aws_iam_role" "ecs_execution" {
