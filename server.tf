@@ -100,7 +100,7 @@ resource "aws_ecs_task_definition" "mlflow" {
           },
           {
             name  = "MLFLOW_PORT"
-            value = local.service_port
+            value = tostring(local.service_port)
           },
           {
             name  = "MLFLOW_GUNICORN_OPTS"
