@@ -168,3 +168,9 @@ variable "proxy_artifact_storage_requests" {
   type        = bool
   default     = false
 }
+
+variable "enable_execute_command" {
+  description = "Toggle if we want to connect to container instance via SSM"
+  type        = bool
+  default     = false
+}
