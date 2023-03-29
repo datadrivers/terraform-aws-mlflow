@@ -38,7 +38,7 @@ resource "aws_iam_role" "ecs_task" {
 
   dynamic "inline_policy" {
     for_each = local.create_dedicated_bucket ? ["1"] : []
-    content = {
+    content {
       name = "access_to_default_buckets"
       policy = jsonencode({
         Version = "2012-10-17"
@@ -57,7 +57,6 @@ resource "aws_iam_role" "ecs_task" {
           {
             Effect = "Allow"
             Action = [
-              "s3:ListBucketMultipartUploads",
               "s3:GetObjectVersionTagging",
               "s3:PutObjectVersionTagging",
               "s3:ListMultipartUploadParts",
@@ -66,9 +65,9 @@ resource "aws_iam_role" "ecs_task" {
               "s3:DeleteObject",
               "s3:GetObjectAcl",
               "s3:AbortMultipartUpload",
-              "s3:GetObjectVersionAcl",
               "s3:GetObjectTagging",
               "s3:PutObjectTagging",
+              "s3:GetObjectVersionAcl",
               "s3:GetObjectVersion",
             ]
             Resource = [
