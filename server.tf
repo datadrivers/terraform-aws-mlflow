@@ -16,6 +16,25 @@ resource "aws_iam_role" "ecs_task" {
       },
     ]
   })
+
+  inline_policy {
+    name = "ssm-execute-command"
+    policy = jsonencode({
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "ssmmessages:CreateControlChannel",
+            "ssmmessages:CreateDataChannel",
+            "ssmmessages:OpenControlChannel",
+            "ssmmessages:OpenDataChannel"
+          ],
+          "Resource" : "*"
+        }
+      ]
+    })
+  }
 }
 
 resource "aws_iam_role" "ecs_execution" {
