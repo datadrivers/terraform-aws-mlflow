@@ -148,6 +148,7 @@ resource "aws_ecs_service" "mlflow" {
   launch_type      = "FARGATE"
   platform_version = "1.4.0"
 
+  enable_execute_command = var.enable_execute_command
 
   network_configuration {
     subnets         = var.service_subnet_ids
