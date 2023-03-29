@@ -154,10 +154,6 @@ resource "aws_ecs_task_definition" "mlflow" {
       environment = concat(
         [
           {
-            name  = "MLFLOW_DEFAULT_ARTIFACT_ROOT"
-            value = "s3://${local.artifact_bucket_id}${var.artifact_bucket_path}"
-          },
-          {
             name  = "MLFLOW_HOST"
             value = "0.0.0.0"
           },
@@ -179,7 +175,12 @@ resource "aws_ecs_task_definition" "mlflow" {
             name  = "MLFLOW_SERVE_ARTIFACTS"
             value = "True"
           },
-        ] : []
+          ] : [
+          {
+            name  = "MLFLOW_DEFAULT_ARTIFACT_ROOT"
+            value = "s3://${local.artifact_bucket_id}${var.artifact_bucket_path}"
+          },
+        ]
       )
       secrets = [
         {
